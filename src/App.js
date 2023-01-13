@@ -67,7 +67,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="shoppinglist">
-        <Header title="Shopping List" />
+        <Header
+          title="Shopping List"
+          boughtCount={
+            this.state.items.filter((item) => item.bought)
+              .length
+          }
+          totalCount={this.state.items.length}
+        />
         <AddButton addItem={this.handleAddItem} />
         <div className="list-box">
           {this.state.items
