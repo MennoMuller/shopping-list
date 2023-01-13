@@ -61,37 +61,55 @@ class App extends React.Component {
   handleRemoveItem = (index) => {
     let newItems = this.state.items;
     delete newItems[index];
+    newItems.sort().pop();
     this.setState({ items: newItems });
+  };
+
+  handleChangeItem = (index) => {
+    const itemName = prompt(
+      "Change to what?",
+      this.state.items[index].name
+    );
+    this.setState({
+      edit: (this.state.items[index].name = itemName)
+    });
   };
 
   render() {
     return (
-      <div className="shoppinglist">
-        <Header
-          title="Shopping List"
-          boughtCount={
-            this.state.items.filter((item) => item.bought)
-              .length
-          }
-          totalCount={this.state.items.length}
-        />
-        <AddButton addItem={this.handleAddItem} />
-        <div className="list-box">
-          {this.state.items
-            .sort((a, b) =>
-              a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-            )
-            .sort((a, b) => a.bought - b.bought)
-            .map((item, index) => (
-              <Item
-                name={item.name}
-                key={item.id.toString()}
-                bought={item.bought}
-                toggleBuy={this.handleBoughtChange}
-                deleteItem={this.handleRemoveItem}
-                index={index}
-              />
-            ))}
+      <div className="outer-container">
+        <div className="shoppinglist">
+          <Header
+            title="Shopping List"
+            boughtCount={
+              this.state.items.filter((item) => item.bought)
+                .length
+            }
+            totalCount={this.state.items.length}
+          />
+          <AddButton addItem={this.handleAddItem} />
+          <div className="list-box">
+            {this.state.items
+              .sort((a, b) =>
+                a.name > b.name
+                  ? 1
+                  : b.name > a.name
+                  ? -1
+                  : 0
+              )
+              .sort((a, b) => a.bought - b.bought)
+              .map((item, index) => (
+                <Item
+                  name={item.name}
+                  key={item.id.toString()}
+                  bought={item.bought}
+                  toggleBuy={this.handleBoughtChange}
+                  deleteItem={this.handleRemoveItem}
+                  editItem={this.handleChangeItem}
+                  index={index}
+                />
+              ))}
+          </div>
         </div>
       </div>
     );

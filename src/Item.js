@@ -8,16 +8,26 @@ const Item = (props) => {
       }
     >
       <span className="item-label">{props.name}</span>
-      <input
-        type="checkbox"
-        checked={props.bought}
-        onChange={() => props.toggleBuy(props.index)}
-      ></input>
+      <label className="container">
+        <input
+          type="checkbox"
+          checked={props.bought}
+          onChange={() => props.toggleBuy(props.index)}
+        ></input>
+        <span className="checkmark"></span>
+      </label>
+
       <button
-        className="delete-item"
+        className="item-button"
         onClick={() => props.deleteItem(props.index)}
       >
         -
+      </button>
+      <button
+        className="item-button"
+        onClick={() => props.editItem(props.index)}
+      >
+        ✎
       </button>
     </div>
   );
