@@ -19,15 +19,15 @@ const Item = (props) => {
 
       <button
         className="item-button"
-        onClick={() => props.deleteItem(props.index)}
-      >
-        -
-      </button>
-      <button
-        className="item-button"
         onClick={() => props.editItem(props.index)}
       >
         ✎
+      </button>
+      <button
+        className="item-button"
+        onClick={() => props.deleteItem(props.index)}
+      >
+        🗑
       </button>
     </div>
   );
