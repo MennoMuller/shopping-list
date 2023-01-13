@@ -1,25 +1,83 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Header from "./Header";
+import AddButton from "./AddButton";
+import Item from "./Item";
+
+class App extends React.Component {
+  state = {
+    items: [
+      {
+        name: "Potatoes",
+        id: 1,
+        bought: true
+      },
+      {
+        name: "Eggs",
+        id: 2,
+        bought: false
+      },
+      {
+        name: "Milk",
+        id: 3,
+        bought: false
+      },
+      {
+        name: "Mangoes",
+        id: 4,
+        bought: true
+      },
+      {
+        name: "Bread",
+        id: 5,
+        bought: true
+      }
+    ],
+    nextID: 6
+  };
+
+  handleBoughtChange = (index) => {
+    console.log(index);
+    this.setState({
+      bought: (this.state.items[index].bought =
+        !this.state.items[index].bought)
+    });
+  };
+
+  handleAddItem = () => {
+    const itemName = prompt("Add what?");
+    this.setState((prevState) => ({
+      items: prevState.items.concat([
+        { name: itemName, id: prevState.nextID }
+      ]),
+      nextID: prevState.nextID + 1
+    }));
+  };
+
+  render() {
+    return (
+      <div className="shoppinglist">
+        <Header title="Shopping List" />
+        <AddButton addItem={this.handleAddItem} />
+        <div className="list-box">
+          {this.state.items
+            .sort((a, b) =>
+              a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+            )
+            .sort((a, b) => a.bought - b.bought)
+            .map((item, index) => (
+              <Item
+                name={item.name}
+                key={item.id.toString()}
+                bought={item.bought}
+                toggleBuy={this.handleBoughtChange}
+                index={index}
+              />
+            ))}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
