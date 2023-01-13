@@ -13,6 +13,12 @@ const Item = (props) => {
         checked={props.bought}
         onChange={() => props.toggleBuy(props.index)}
       ></input>
+      <button
+        className="delete-item"
+        onClick={() => props.deleteItem(props.index)}
+      >
+        -
+      </button>
     </div>
   );
 };

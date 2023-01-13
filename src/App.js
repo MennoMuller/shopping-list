@@ -48,10 +48,20 @@ class App extends React.Component {
     const itemName = prompt("Add what?");
     this.setState((prevState) => ({
       items: prevState.items.concat([
-        { name: itemName, id: prevState.nextID }
+        {
+          name: itemName,
+          id: prevState.nextID,
+          bought: false
+        }
       ]),
       nextID: prevState.nextID + 1
     }));
+  };
+
+  handleRemoveItem = (index) => {
+    let newItems = this.state.items;
+    delete newItems[index];
+    this.setState({ items: newItems });
   };
 
   render() {
@@ -71,6 +81,7 @@ class App extends React.Component {
                 key={item.id.toString()}
                 bought={item.bought}
                 toggleBuy={this.handleBoughtChange}
+                deleteItem={this.handleRemoveItem}
                 index={index}
               />
             ))}
