@@ -2,7 +2,7 @@ import React from "react";
 
 import Header from "./Header";
 import AddButton from "./AddButton";
-import Item from "./Item";
+import ItemList from "./ItemList";
 
 class App extends React.Component {
   state = {
@@ -88,28 +88,12 @@ class App extends React.Component {
             totalCount={this.state.items.length}
           />
           <AddButton addItem={this.handleAddItem} />
-          <div className="list-box">
-            {this.state.items
-              .sort((a, b) =>
-                a.name > b.name
-                  ? 1
-                  : b.name > a.name
-                  ? -1
-                  : 0
-              )
-              .sort((a, b) => a.bought - b.bought)
-              .map((item, index) => (
-                <Item
-                  name={item.name}
-                  key={item.id.toString()}
-                  bought={item.bought}
-                  toggleBuy={this.handleBoughtChange}
-                  deleteItem={this.handleRemoveItem}
-                  editItem={this.handleChangeItem}
-                  index={index}
-                />
-              ))}
-          </div>
+          <ItemList
+            items={this.state.items}
+            toggleBuy={this.handleBoughtChange}
+            deleteItem={this.handleRemoveItem}
+            editItem={this.handleChangeItem}
+          />
         </div>
       </div>
     );
